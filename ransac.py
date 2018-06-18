@@ -9,7 +9,7 @@ import sys
 
 from sift import *
 from homography import *
-
+import numpy as np
 import pdb
 
 # New version coming soon.
@@ -148,10 +148,21 @@ if __name__ == "__main__":
 
     try:
         # Load images from command prompt
-        im1 = Image.open(sys.argv[1])
-        im2 = Image.open(sys.argv[2])
+        im = Image.open('mi_0.tif')
+        bk = Image.open('BK.tif')
+        #im_double = np.array(im,dtype='float32')
+        #print(im_double)
+        #print(asarray(img).shape)
+        #im = Image.fromarray(asarray(img) - asarray(bk))
+        #im = img.convert('L') - bk.convert('L')
+        #im = Image.blend(img, -bk)
+        im1 = im.crop((0, 0, im.size[0], im.size[1]/2))
+        im2 = im.crop((0, im.size[1]/2, im.size[0], im.size[1]))
+        #print(im1)
+        # im1.save('temp/1.'+sys.argv[1].split('.')[-1])
+        # im2.save('temp/2.'+sys.argv[1].split('.')[-1])
     except IndexError:
-        print('Usage: python ransac.py image1 image2')
+        print('Usage: python ransac.py image')
         sys.exit()
     im1.convert('L').save('temp/1.pgm')
     im2.convert('L').save('temp/2.pgm')
