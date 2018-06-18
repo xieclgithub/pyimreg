@@ -158,16 +158,21 @@ if __name__ == "__main__":
         #im = Image.blend(img, -bk)
         im1 = im.crop((0, 0, im.size[0], im.size[1]/2))
         im2 = im.crop((0, im.size[1]/2, im.size[0], im.size[1]))
+
         #print(im1)
         # im1.save('temp/1.'+sys.argv[1].split('.')[-1])
         # im2.save('temp/2.'+sys.argv[1].split('.')[-1])
     except IndexError:
         print('Usage: python ransac.py image')
         sys.exit()
-    im1.convert('L').save('temp/1.pgm')
-    im2.convert('L').save('temp/2.pgm')
+    # im1.convert('L').save('temp/1.pgm')
+    # im2.convert('L').save('temp/2.pgm')
     im1 = asarray(im1)
     im2 = asarray(im2)
+    im1 = im1 / 65536 * 256
+    im2 = im2 / 65536 * 256
+    Image.fromarray(im1, mode='L').save('temp/1.pgm')
+    Image.fromarray(im2, mode='L').save('temp/2.pgm')
     process_image('temp/1.pgm', 'temp/1.key')
     process_image('temp/2.pgm', 'temp/2.key')
     key1 = read_features_from_file('temp/1.key')
