@@ -9,3 +9,5 @@ siftWin32.exe
 *.swp
 *.swo
 temp/
+*.tif
+.idea
